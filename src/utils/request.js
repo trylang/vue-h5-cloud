@@ -35,7 +35,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     Toast.clear()
-    const res = response.data
+    // const res = response.data
+    const res = response
     if (res.status && res.status !== 200) {
       // 登录超时,重新登录
       if (res.status === 401) {
@@ -43,9 +44,9 @@ service.interceptors.response.use(
           location.reload()
         })
       }
-      return Promise.reject(res || 'error')
+      return Promise.reject(res.data || 'error')
     } else {
-      return Promise.resolve(res)
+      return Promise.resolve(res.data)
     }
   },
   error => {
